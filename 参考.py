@@ -51,6 +51,7 @@ def main(page: ft.Page):
     description_box = ft.TextField(
         label="データパックの説明", width=300, text_align=ft.TextAlign.LEFT
     )
+
     damage_type_box = ft.Checkbox(label="damage_type", value=False)
     enchantment_box = ft.Checkbox(label="enchantment", value=False)
     item_modifier_box = ft.Checkbox(label="item_modifier", value=False)
