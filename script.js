@@ -1,10 +1,10 @@
 // 初期化用関数
 function _init_() {
     // JSON読み込み
-    var varJson;
-    fetch('./var.json').then(response => response.json()).then(data => {
-        varJson = data;
-        console.log(varJson);
+    // var varJson;
+    // fetch('./var.json').then(response => response.json()).then(data => {
+        // varJson = data;
+        // console.log(varJson);
         // console.log(Object.keys(data.packFormat));
     })
 
