@@ -5,35 +5,41 @@
     <meta charset="UTF-8">
     <title>DatapackGenerator</title>
     <link rel="stylesheet" href="./style.css" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
 </head>
 
 <body>
-    <input type="text" placeholder="データパック名" id="datapack-name-input"><br>
-    <input type="text" placeholder="名前空間" id="namespace-input"><br>
-    Minecraftのバージョン：<select id="mc-ver-input"></select><br>
-    <input type="text" placeholder="データパックの説明" id="description"><br><br>
+    <input type="text" placeholder="データパック名" id="datapack-name-input" required><br>
+    <!-- ファイル選んで自動で入力も -->
+    <input type="text" placeholder="名前空間" id="namespace-input">
+    <input type="checkbox" id="namespace-auto">データパック名から補完<br>
+    <!-- Minecraftのバージョン：<select id="mc-ver-input"></select><br> -->
+    <textarea placeholder="データパックの説明" id="description-input"></textarea><br><br>
 
     <div id="directory">
-        <input type="checkbox" id="dir-damage-type-input">damage_type<br>
+        <!-- <input type="checkbox" id="dir-damage-type-input">damage_type<br> -->
         <input type="checkbox" id="dir-function-input" checked>function<br>
             <span class="indent-1"><input type="checkbox" id="dir-function-sys-input" checked>/sys</span><br>
-                <span class="indent-2"><input type="checkbox" id="dir-function-sys-tick-input" checked>tick.mcfunction（毎tick実行）</span><br>
-                <span class="indent-2"><input type="checkbox" id="dir-function-sys-load-input" checked>load.mcfunction（ワールド読み込み時に毎回実行）</span><br>
-                <span class="indent-2"><input type="checkbox" id="dir-function-sys-setup-input" checked>setup.mcfunction（データパック読み込み時に1回だけ実行）</span><br>
-                <span class="indent-2"><input type="checkbox" id="dir-function-sys-setup-delayed-input" checked>setup_delayed.mcfunction（setup.mcfunctionの遅延版）</span><br>
-                <span class="indent-2"><input type="checkbox" id="dir-function-sys-uninstall-input" checked>uninstall.mcfunction（デタパ消したとき用）</span><br>
+                <span class="indent-2 child-function child-function-sys"><input type="checkbox" id="function-sys-tick-input" checked>tick.mcfunction（毎tick実行）</span><br>
+                <!-- <span class="indent-2 child-function child-function-sys"><input type="checkbox" id="function-sys-load-input" checked>load.mcfunction（ワールド読み込み時に毎回実行）</span><br> -->
+                <!-- <span class="indent-2 child-function child-function-sys"><input type="checkbox" id="function-sys-setup-input" checked>setup.mcfunction（データパック読み込み時に1回だけ実行）</span><br> -->
+                <!-- <span class="indent-2 child-function child-function-sys"><input type="checkbox" id="function-sys-setup-delayed-input" checked>setup_delayed.mcfunction（setup.mcfunctionの遅延版）</span><br> -->
+                <!-- <span class="indent-2 child-function child-function-sys"><input type="checkbox" id="function-sys-uninstall-input" checked>uninstall.mcfunction（デタパ消したとき用）</span><br> -->
     </div><br>
 
-    <input type="checkbox" id="impdoc-input" checked>IMP-Docを入れるか<br>
-    <input type="checkbox" id="dir-docs-input" checked>/docsを入れるか<br>
-    <input type="checkbox" id="commonlib-input" checked>CommonLib導入<br>
-    <!--   導入確認用ストレージ   -->
-    pack.png用の画像を選択：<input type="file" id="pack-png-input" accept="image/png"><br>
+    <input type="checkbox" id="readme-input" checked>docs/README.mdを生成するか<br>
+    <input type="checkbox" id="info-json-input" checked>docs/info.jsonを生成するか<br>
+    <!-- <input type="checkbox" id="impdoc-input" checked>IMP-Docを入れるか<br> -->
+    <!-- <input type="checkbox" id="commonlib-input" checked>CommonLib導入<br> -->
+    <!-- <input type="checkbox" id="import-check-input" checked>導入確認用ストレージを生成するか<br> -->
+    <!-- pack.png用の画像を選択：<input type="file" id="pack-png-input" accept="image/png"><br> -->
     <!-- ディレクトリの構成も表示したい -->
 
-    <button id="generate-button">生成（ダウンロード）</button>
+    <button id="generate-btn">生成（ダウンロード）</button>
 
     <script src="./script.js"></script>
 </body>
 
 </html>
+
+<!-- child-dir-function child-dir-function-sys←ここらへん使いたい -->
