@@ -6,7 +6,7 @@ function _init_() {
         // varJson = data;
         // console.log(varJson);
         // console.log(Object.keys(data.packFormat));
-    })
+    // })
 
     // バージョン
     // console.log(varJson);
@@ -25,8 +25,10 @@ function generateDatapack() {
     const dpName = document.getElementById("datapack-name-input").value;
     const dpNamespace = document.getElementById("namespace-input").value;
     const _function_sys_tick = document.getElementById("function-sys-tick-input").checked
+    // const dir_advancement = document.getElementById("dir-advancement-input").checked
     const docs_readme = document.getElementById("readme-input").checked
-    const docs_info = document.getElementById("info-json-input").checked
+    // const docs_info = document.getElementById("info-json-input").checked
+
 
     const zip = new JSZip();
 
@@ -37,6 +39,11 @@ function generateDatapack() {
             description: dpDescription
         }
     }, null, 4))
+
+    // // advancement
+    // if (dir_advancement == true) {
+    //     zip.file(`data/${dpNamespace}/advancement`)
+    // }
 
     // function
     if (_function_sys_tick == true) {
