@@ -92,7 +92,7 @@ function test_() {
     }
 }
 
-
+//! delayed系は40t
 
 
 
@@ -103,4 +103,12 @@ _init_();
 document.getElementById("generate-btn").addEventListener("click", generateDatapack);
 
 // 補完
-document.getElementById("datapack-name-input").addEventListener("change", test_)
+document.getElementById("datapack-name-input").addEventListener("input", test_)
+
+document.getElementById("namespace-auto").addEventListener("change", function () {
+    if (document.getElementById("namespace-auto").checked == true) {
+        document.getElementById("namespace-input").disabled = true
+    } else {
+        document.getElementById("namespace-input").disabled = false
+    }
+})
