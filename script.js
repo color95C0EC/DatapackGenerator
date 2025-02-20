@@ -1,21 +1,18 @@
 // 初期化用関数
+var varJson;
 function _init_() {
     // JSON読み込み
-    // var varJson;
-    // fetch('./var.json').then(response => response.json()).then(data => {
-        // varJson = data;
-        // console.log(varJson);
-        // console.log(Object.keys(data.packFormat));
-    // })
+    fetch('./var.json').then(response => response.json()).then(data => {
+        varJson = data;
 
-    // バージョン
-    // console.log(varJson);
-    // mcVerInput = document.getElementById("mc-ver-input");
-    // for (let i = 0; i < Object.keys(varJson.packFormat).length; i++) {
-    //     const child = document.createElement("option");
-    //     child.textContent = Object.keys(varJson.packFormat)[i];
-    //     mcVerInput.appendChild(child);
-    // }
+        // バージョン
+        mcVerInput = document.getElementById("mc-ver-input");
+        for (let i = 0; i < Object.keys(varJson.packFormat).length; i++) {
+            const child = document.createElement("option");
+            child.textContent = Object.keys(varJson.packFormat)[i];
+            mcVerInput.appendChild(child);
+        }
+    })
 }
 
 // 生成用関数
@@ -24,29 +21,23 @@ function generateDatapack() {
     const dpDescription = document.getElementById("description-input").value;
     const dpName = document.getElementById("datapack-name-input").value;
     const dpNamespace = document.getElementById("namespace-input").value;
-    const _function_sys_tick = document.getElementById("function-sys-tick-input").checked
-    // const dir_advancement = document.getElementById("dir-advancement-input").checked
-    const docs_readme = document.getElementById("readme-input").checked
-    // const docs_info = document.getElementById("info-json-input").checked
-
+    const functionSysTick = document.getElementById("function-sys-tick-input").checked;
+    const functionSysLoad = document.getElementById("function-sys-load-input").checked;
+    const functionSysSetup = document.getElementById("function-sys-setup-input").checked;
+    const mcVerInput = document.getElementById("mc-ver-input").value;
 
     const zip = new JSZip();
 
-    // pack.mcmetaを生成
+    // pack.mcmeta
     zip.file('pack.mcmeta', JSON.stringify({
         pack: {
-            pack_format: 61,
+            pack_format: parseInt(varJson.packFormat[mcVerInput]),
             description: dpDescription
         }
     }, null, 4))
 
-    // // advancement
-    // if (dir_advancement == true) {
-    //     zip.file(`data/${dpNamespace}/advancement`)
-    // }
-
     // function
-    if (_function_sys_tick == true) {
+    if (functionSysTick == true) {
         zip.file(`data/${dpNamespace}/function/sys/tick.mcfunction`, "")
         zip.file(`data/minecraft/tags/function/tick.json`, JSON.stringify({
             values: [
@@ -54,17 +45,29 @@ function generateDatapack() {
             ]
         }, null, 4))
     }
-
-    // docs/*
-    if (docs_readme == true) {
-        zip.file("docs/README.md", "# 動作環境\n")
+    if (functionSysLoad == true) {
+        zip.file(`data/${dpNamespace}/function/sys/load.mcfunction`, "")
+        zip.file(`data/minecraft/tags/function/load.json`, JSON.stringify({
+            values: [
+                `${dpNamespace}:sys/load`
+            ]
+        }, null, 4))
     }
-    if (docs_readme == true) {
-        zip.file("docs/info.json", JSON.stringify({
-            namespace: [dpNamespace]
+    if (functionSysSetup == true) {
+        zip.file(`data/${dpNamespace}/function/sys/setup.mcfunction`, "")
+        zip.file(`data/${dpNamespace}/advancement/setup.json`, JSON.stringify({
+            criteria: {
+                enter: {
+                    trigger: "minecraft:location"
+                }
+            },
+            rewards: {
+                function: `${dpNamespace}:sys/setup`
+            }
         }, null, 4))
     }
 
+    //TODO: 遅延版（_delayed, 40t遅らせる）
 
 
 
@@ -92,7 +95,6 @@ function test_() {
     }
 }
 
-//! delayed系は40t
 
 
 

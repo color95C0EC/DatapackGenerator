@@ -9,30 +9,28 @@
 </head>
 
 <body>
+    <!-- <button>test</button> -->
+    <!-- ↑Test, testでセット -->
     <input type="text" placeholder="データパック名" id="datapack-name-input" required><br>
     <input type="text" placeholder="名前空間" id="namespace-input">
     <input type="checkbox" id="namespace-auto">データパック名から補完<br>
-    <!-- Minecraftのバージョン：<select id="mc-ver-input"></select><br> -->
+    Minecraftのバージョン：<select id="mc-ver-input"></select><br>
     <textarea placeholder="データパックの説明" id="description-input"></textarea><br><br>
 
     <div id="directory">
-        <input type="checkbox" id="dir-advancement-input">advancement<br>
-        <!-- <input type="checkbox" id="dir-damage-type-input">damage_type<br> -->
         <input type="checkbox" id="dir-function-input" checked>function<br>
-            <span class="indent-1"><input type="checkbox" id="dir-function-sys-input" checked>/sys</span><br>
-                <span class="indent-2 child-function child-function-sys"><input type="checkbox" id="function-sys-tick-input" checked>tick.mcfunction（毎tick実行）</span><br>
-                <!-- <span class="indent-2 child-function child-function-sys"><input type="checkbox" id="function-sys-load-input" checked>load.mcfunction（ワールド読み込み時に毎回実行）</span><br> -->
-<!--         上のやつの遅延版つくる -->
-                <!-- <span class="indent-2 child-function child-function-sys"><input type="checkbox" id="function-sys-setup-input" checked>setup.mcfunction（データパック読み込み時に1回だけ実行）</span><br> -->
-                <!-- <span class="indent-2 child-function child-function-sys"><input type="checkbox" id="function-sys-setup-delayed-input" checked>setup_delayed.mcfunction（setup.mcfunctionの遅延版）</span><br> -->
-                <!-- <span class="indent-2 child-function child-function-sys"><input type="checkbox" id="function-sys-uninstall-input" checked>uninstall.mcfunction（デタパ消したとき用）</span><br> -->
+        <span class="indent-1"><input type="checkbox" id="dir-function-sys-input" checked>/sys</span><br>
+        <span class="indent-2"><input type="checkbox" id="function-sys-tick-input" checked><span class="tooltip">tick.mcfunction<span class="tooltip-text">毎tick実行されるfunction</span></span></span><br>
+        <span class="indent-2"><input type="checkbox" id="function-sys-load-input" checked><span class="tooltip">load.mcfunction<span class="tooltip-text">ワールド読み込み時に毎回実行</span></span></span><br>
+        <span class="indent-2"><input type="checkbox" id="function-sys-setup-input" checked><span class="tooltip">setup.mcfunction<span class="tooltip-text">データパック読み込み時に1回だけ実行</span></span></span><br>
+        <!-- <span class="indent-2"><input type="checkbox" id="function-sys-setup-delayed-input" checked>setup_delayed.mcfunction（setup.mcfunctionの遅延版）</span><br> -->
+        <!-- <span class="indent-2"><input type="checkbox" id="function-sys-uninstall-input" checked>uninstall.mcfunction（デタパ消したとき用）</span><br> -->
     </div><br>
 
-    <!-- <input type="checkbox" id="readme-input" checked>docs/README.mdを生成するか<br> -->
-    <!-- <input type="checkbox" id="info-json-input" checked>docs/info.jsonを生成するか<br> -->
-    <!-- <input type="checkbox" id="impdoc-input" checked>IMP-Docを入れるか<br> -->
-    <!-- <input type="checkbox" id="commonlib-input" checked>CommonLib導入<br> -->
-    <!-- <input type="checkbox" id="import-check-input" checked>導入確認用ストレージを生成するか<br> -->
+    <!-- <input type="checkbox" id="readme-input" checked>docs/README.mdを生成<br> -->
+    <!-- <input type="checkbox" id="info-json-input" checked>docs/info.jsonを生成<br> -->
+    <!-- <input type="checkbox" id="commonlib-input" checked>CommonLib導入の確認<br> -->
+    <!-- <input type="checkbox" id="import-check-input" checked>導入確認用ストレージ<br> -->
     <!-- pack.png用の画像を選択：<input type="file" id="pack-png-input" accept="image/png"><br> -->
     <!-- ディレクトリの構成も表示したい -->
 
@@ -42,5 +40,3 @@
 </body>
 
 </html>
-
-<!-- child-dir-function child-dir-function-sys←ここらへん使いたい -->
