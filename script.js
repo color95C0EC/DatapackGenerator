@@ -43,7 +43,7 @@ function generateDatapack() {
             values: [
                 `${dpNamespace}:sys/tick`
             ]
-        }, null, 4))
+        }, null, 2))
     }
     if (functionSysLoad == true) {
         zip.file(`data/${dpNamespace}/function/sys/load.mcfunction`, "")
@@ -51,7 +51,7 @@ function generateDatapack() {
             values: [
                 `${dpNamespace}:sys/load`
             ]
-        }, null, 4))
+        }, null, 2))
     }
     if (functionSysSetup == true) {
         zip.file(`data/${dpNamespace}/function/sys/setup.mcfunction`, "")
@@ -64,7 +64,7 @@ function generateDatapack() {
             rewards: {
                 function: `${dpNamespace}:sys/setup`
             }
-        }, null, 4))
+        }, null, 2))
     }
 
     //TODO: 遅延版（_delayed, 40t遅らせる）
