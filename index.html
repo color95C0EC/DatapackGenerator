@@ -3,38 +3,42 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DatapackGenerator</title>
-    <link rel="stylesheet" href="./style.css" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+    <link rel="stylesheet" href="./style.css" type="text/css">
 </head>
 
-<body>
-    <!-- <button>test</button> -->
-    <!-- ↑Test, testでセット -->
-    <input type="text" placeholder="データパック名" id="datapack-name-input" required><br>
-    <input type="text" placeholder="名前空間" id="namespace-input">
-    <input type="checkbox" id="namespace-auto">データパック名から補完<br>
-    Minecraftのバージョン：<select id="mc-ver-input"></select><br>
-    <textarea placeholder="データパックの説明" id="description-input"></textarea><br><br>
-
-    <div id="directory">
-        <span>function</span><br>
-        <span class="indent-1">└sys</span><br>
-        <span class="indent-2"><input type="checkbox" id="function-sys-tick-input" checked><span class="tooltip">└tick.mcfunction<span class="tooltip-text">毎tick実行されるfunction</span></span></span><br>
-        <span class="indent-2"><input type="checkbox" id="function-sys-load-input" checked><span class="tooltip">└load.mcfunction<span class="tooltip-text">ワールド読み込み時に毎回実行</span></span></span><br>
-        <span class="indent-2"><input type="checkbox" id="function-sys-setup-input" checked><span class="tooltip">└setup.mcfunction<span class="tooltip-text">データパック読み込み時に1回だけ実行</span></span></span><br>
-        <!-- <span class="indent-2"><input type="checkbox" id="function-sys-setup-delayed-input" checked>setup_delayed.mcfunction（setup.mcfunctionの遅延版）</span><br> -->
-        <!-- <span class="indent-2"><input type="checkbox" id="function-sys-uninstall-input" checked>uninstall.mcfunction（デタパ消したとき用）</span><br> -->
-    </div><br>
-
-    <!-- <input type="checkbox" id="readme-input" checked>docs/README.mdを生成<br> -->
-    <!-- <input type="checkbox" id="info-json-input" checked>docs/info.jsonを生成<br> -->
-    <!-- <input type="checkbox" id="commonlib-input" checked>CommonLib導入の確認<br> -->
-    <!-- <input type="checkbox" id="import-check-input" checked>導入確認用ストレージ<br> -->
-    <!-- pack.png用の画像を選択：<input type="file" id="pack-png-input" accept="image/png"><br> -->
-    <!-- ディレクトリの構成も表示したい -->
-
-    <button id="generate-btn">生成（ダウンロード）</button>
+<body data-bs-theme="dark">
+    <div id="input-area">
+        <div class="form-group">
+            <label for="datapack-name-input">データパック名</label>
+            <input class="form-control" id="datapack-name-input"></input>
+        </div>
+        <div class="form-group">
+            <label for="namespace-input">名前空間</label>
+            <input class="form-control" id="namespace-input"></input>
+        </div>
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="namespace-complement-input">
+            <label class="form-check-label" for="namespace-complement-input">データパック名から補完</label>
+        </div>
+        <div class="form-group">
+            <label for="mc-version-input">Minecraftのバージョン</label>
+            <select class="form-control" id="mc-version-input"></select>
+        </div>
+        <div class="form-group">
+            <label for="description-input">説明</label>
+            <textarea class="form-control" id="description-input" rows="3"></textarea>
+        </div>
+        <button type="button" class="btn btn-primary" id="generate-btn">生成（ダウンロード）</button>
+    </div>
 
     <script src="./script.js"></script>
 </body>

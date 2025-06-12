@@ -1,116 +1,153 @@
-// 初期化用関数
 var varJson;
-function _init_() {
-    // JSON読み込み
-    fetch('./var.json').then(response => response.json()).then(data => {
-        varJson = data;
+const mcVersionInput = document.getElementById("mc-version-input");
+const namespaceInput = document.getElementById("namespace-input");
+const datapackNameInput = document.getElementById("datapack-name-input");
 
-        // バージョン
-        mcVerInput = document.getElementById("mc-ver-input");
-        for (let i = 0; i < Object.keys(varJson.packFormat).length; i++) {
-            const child = document.createElement("option");
-            child.textContent = Object.keys(varJson.packFormat)[i];
-            mcVerInput.appendChild(child);
-        }
-    })
-}
 
-// 生成用関数
+document.addEventListener("DOMContentLoaded", function () {
+  fetch('./var.json').then(response => response.json()).then(data => {
+    varJson = data;
+
+    const varPackFormat = varJson["packFormat"];
+    for (let mcVersion of Object.keys(varPackFormat)) {
+      if (varPackFormat[mcVersion] == "---") {
+        const child = document.createElement("hr");
+        child.innerText = "";
+        mcVersionInput.appendChild(child);
+      } else {
+        const child = document.createElement("option");
+        child.textContent = mcVersion;
+        mcVersionInput.appendChild(child);
+      };
+    };
+  });
+});
+
+
+
+
+
+
+
+
 function generateDatapack() {
-    // 色々取ってくる
-    const dpDescription = document.getElementById("description-input").value;
-    const dpName = document.getElementById("datapack-name-input").value;
-    const dpNamespace = document.getElementById("namespace-input").value;
-    const functionSysTick = document.getElementById("function-sys-tick-input").checked;
-    const functionSysLoad = document.getElementById("function-sys-load-input").checked;
-    const functionSysSetup = document.getElementById("function-sys-setup-input").checked;
-    const mcVerInput = document.getElementById("mc-ver-input").value;
+  // 色々取ってくる
+  const dpDescription = document.getElementById("description-input").value;
+  const dpName = datapackNameInput.value;
+  const dpNamespace = namespaceInput.value;
+  const mcVerInput = mcVersionInput.value;
+  // const functionSysTick = document.getElementById("function-sys-tick-input").checked;
+  // const functionSysLoad = document.getElementById("function-sys-load-input").checked;
+  // const functionSysSetup = document.getElementById("function-sys-setup-input").checked;
 
-    const zip = new JSZip();
+  const zip = new JSZip();
 
-    // pack.mcmeta
-    zip.file('pack.mcmeta', JSON.stringify({
-        pack: {
-            pack_format: parseInt(varJson.packFormat[mcVerInput]),
-            description: dpDescription
-        }
-    }, null, 4))
+  const packFormat = parseInt(varJson["packFormat"][mcVerInput]);
 
-    // function
-    if (functionSysTick == true) {
-        zip.file(`data/${dpNamespace}/function/sys/tick.mcfunction`, "")
-        zip.file(`data/minecraft/tags/function/tick.json`, JSON.stringify({
-            values: [
-                `${dpNamespace}:sys/tick`
-            ]
-        }, null, 2))
+
+  function getDirectoryNameDependingVersion(directoryName) {
+    if (packFormat >= 45) {
+      return directoryName;
+    } else {
+      return directoryName + "s";
+    };
+  };
+
+  function generateFunction(functionName, generateTags, functionType) {
+    zip.file(`data/${dpNamespace}/${getDirectoryNameDependingVersion("function")}/${functionName}.mcfunction`, "");
+    if (generateTags) {
+      zip.file(`data/minecraft/tags/${getDirectoryNameDependingVersion("function")}/${functionType}.json`, JSON.stringify({
+        values: [
+          `${dpNamespace}:${functionName}`
+        ]
+      }, null, 2));
+    };
+  };
+
+
+
+
+
+
+
+  // pack.mcmeta
+  zip.file('pack.mcmeta', JSON.stringify({
+    pack: {
+      pack_format: packFormat,
+      description: dpDescription
     }
-    if (functionSysLoad == true) {
-        zip.file(`data/${dpNamespace}/function/sys/load.mcfunction`, "")
-        zip.file(`data/minecraft/tags/function/load.json`, JSON.stringify({
-            values: [
-                `${dpNamespace}:sys/load`
-            ]
-        }, null, 2))
+  }, null, 4));
+
+
+
+  // function
+  generateFunction("sys/tick", true, "tick");
+  generateFunction("sys/load", true, "load");
+
+  generateFunction("sys/setup", false);
+  zip.file(`data/${dpNamespace}/${getDirectoryNameDependingVersion("advancement")}/setup.json`, JSON.stringify({
+    criteria: {
+      enter: {
+        trigger: "minecraft:location"
+      }
+    },
+    rewards: {
+      function: `${dpNamespace}:sys/setup`
     }
-    if (functionSysSetup == true) {
-        zip.file(`data/${dpNamespace}/function/sys/setup.mcfunction`, "")
-        zip.file(`data/${dpNamespace}/advancement/setup.json`, JSON.stringify({
-            criteria: {
-                enter: {
-                    trigger: "minecraft:location"
-                }
-            },
-            rewards: {
-                function: `${dpNamespace}:sys/setup`
-            }
-        }, null, 2))
-    }
-
-    //TODO: 遅延版（_delayed, 40t遅らせる）
+  }, null, 2));
 
 
 
-    zip.generateAsync({ type: "blob" }).then(blob => {
-        // ダウンロードリンクを生成
-        let dlLink = document.createElement("a");
+  // recipe
+  zip.file(`data/${dpNamespace}/${getDirectoryNameDependingVersion("recipe")}/`, "");
 
-        // blobからURLを生成
-        const dataUrl = URL.createObjectURL(blob);
-        dlLink.href = dataUrl;
-        dlLink.download = `${dpName}.zip`;
 
-        // 設置/クリック/削除
-        document.body.insertAdjacentElement("beforeEnd", dlLink);
-        dlLink.click();
-        dlLink.remove();
 
-        // https://r17n.page/2020/01/12/js-download-zipped-images-to-local/
-    });
+
+
+
+  zip.generateAsync({ type: "blob" }).then(blob => {
+    // ダウンロードリンクを生成
+    let dlLink = document.createElement("a");
+
+    // blobからURLを生成
+    const dataUrl = URL.createObjectURL(blob);
+    dlLink.href = dataUrl;
+    dlLink.download = `${dpName}.zip`;
+
+    // 設置/クリック/削除
+    document.body.insertAdjacentElement("beforeEnd", dlLink);
+    dlLink.click();
+    dlLink.remove();
+
+    // https://r17n.page/2020/01/12/js-download-zipped-images-to-local/
+  });
 }
 
-function test_() {
-    if (document.getElementById("namespace-auto").checked == true) {
-        document.getElementById("namespace-input").value = document.getElementById("datapack-name-input").value.toLowerCase();
-    }
+
+
+
+function complement() {
+  let value = "";
+  const datapackName = datapackNameInput.value.replace(/[^A-Za-z-_]/g, "");
+  value += datapackName.charAt(0).toLowerCase();
+  value += datapackName.substr(1).replace(/([A-Z])/g, "_$1").toLowerCase();
+  namespaceInput.value = value;
 }
 
 
-
-
-// 初期化
-_init_();
-
-// 押されたら生成
 document.getElementById("generate-btn").addEventListener("click", generateDatapack);
 
-// 補完
-document.getElementById("datapack-name-input").addEventListener("input", test_)
+const namespaceComplementInput = document.getElementById("namespace-complement-input");
 
-document.getElementById("namespace-auto").addEventListener("change", function () {
-    if (document.getElementById("namespace-auto").checked == true) {
-        document.getElementById("namespace-input").disabled = true
-    } else {
-        document.getElementById("namespace-input").disabled = false
-    }
-})
+datapackNameInput.addEventListener("input", function () {
+  if (namespaceComplementInput.checked) { complement(); }
+});
+namespaceComplementInput.addEventListener("change", function () {
+  if (namespaceComplementInput.checked) {
+    namespaceInput.disabled = true;
+    complement();
+  } else {
+    namespaceInput.disabled = false;
+  };
+});
