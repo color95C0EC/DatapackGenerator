@@ -17,27 +17,164 @@
 
 <body data-bs-theme="dark">
     <div id="input-area">
-        <div class="form-group">
-            <label for="datapack-name-input">データパック名</label>
-            <input class="form-control" id="datapack-name-input"></input>
+        <div class="row">
+            <div class="col-5">
+                <div class="form-group">
+                    <label for="datapack-name-input">データパック名</label>
+                    <input class="form-control" id="datapack-name-input"></input>
+                </div>
+                <div class="form-group">
+                    <label for="namespace-input">名前空間</label>
+                    <input class="form-control" id="namespace-input"></input>
+                </div>
+                <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="namespace-complement-input">
+                    <label class="form-check-label" for="namespace-complement-input">データパック名から補完</label>
+                </div>
+                <div class="form-group">
+                    <label for="mc-version-input">Minecraftのバージョン</label>
+                    <select class="form-control" id="mc-version-input"></select>
+                </div>
+                <div class="form-group">
+                    <label for="description-input">説明</label>
+                    <textarea class="form-control" id="description-input" rows="3"></textarea>
+                </div>
+                <button type="button" class="btn btn-primary" id="generate-btn">生成（ダウンロード）</button>
+            </div>
+            <div class="col-7 card">
+                <!-- <div class="card-body">
+                    <h5>データパックの構成</h5>
+                    <div>
+                        (Datapack name)
+                        <div class="indent-20px">
+                            data
+                            <div class="indent-20px">
+                                (namespace)
+                                <div class="indent-20px form-group form-check">
+                                    <input type="checkbox" class="form-check-input" id="namespace-advancement">
+                                    <label class="form-check-label" for="namespace-advancement">advancement</label>
+                                </div>
+                                <div class="indent-20px">
+                                    banner_pattern
+                                </div>
+                                <div class="indent-20px">
+                                    cat_variant
+                                </div>
+                                <div class="indent-20px">
+                                    chat_type
+                                </div>
+                                <div class="indent-20px">
+                                    chicken_variant
+                                </div>
+                                <div class="indent-20px">
+                                    cow_variant
+                                </div>
+                                <div class="indent-20px form-group form-check">
+                                    <input type="checkbox" class="form-check-input" id="namespace-damage-type">
+                                    <label class="form-check-label" for="namespace-damage-type">damage_type</label>
+                                </div>
+                                <div class="indent-20px form-group form-check">
+                                    <input type="checkbox" class="form-check-input" id="namespace-dialog">
+                                    <label class="form-check-label" for="namespace-dialog">dialog</label>
+                                </div>
+                                <div class="indent-20px form-group form-check">
+                                    <input type="checkbox" class="form-check-input" id="namespace-dimension">
+                                    <label class="form-check-label" for="namespace-dimension">dimension</label>
+                                </div>
+                                <div class="indent-20px form-group form-check">
+                                    <input type="checkbox" class="form-check-input" id="namespace-dimension-type">
+                                    <label class="form-check-label" for="namespace-dimension-type">dimension_type</label>
+                                </div>
+                                <div class="indent-20px">
+                                    enchantment
+                                </div>
+                                <div class="indent-20px">
+                                    enchantment_provider
+                                </div>
+                                <div class="indent-20px">
+                                    function
+                                </div>
+                                <div class="indent-20px">
+                                    frog_variant
+                                </div>
+                                <div class="indent-20px">
+                                    instrument
+                                </div>
+                                <div class="indent-20px">
+                                    item_modifier
+                                </div>
+                                <div class="indent-20px">
+                                    jukebox_song
+                                </div>
+                                <div class="indent-20px">
+                                    loot_table
+                                </div>
+                                <div class="indent-20px">
+                                    painting_variant
+                                </div>
+                                <div class="indent-20px">
+                                    pig_variant
+                                </div>
+                                <div class="indent-20px">
+                                    predicate
+                                </div>
+                                <div class="indent-20px">
+                                    recipe
+                                </div>
+                                <div class="indent-20px">
+                                    structure
+                                </div>
+                                <div class="indent-20px">
+                                    tags
+                                    <div class="indent-20px">
+                                        block
+                                    </div>
+                                </div>
+                                <div class="indent-20px">
+                                    test_environment
+                                </div>
+                                <div class="indent-20px">
+                                    test_instance
+                                </div>
+                                <div class="indent-20px">
+                                    trial_spawner
+                                </div>
+                                <div class="indent-20px">
+                                    trim_material
+                                </div>
+                                <div class="indent-20px">
+                                    trim_pattern
+                                </div>
+                                <div class="indent-20px">
+                                    wolf_sound_variant
+                                </div>
+                                <div class="indent-20px">
+                                    wolf_variant
+                                </div>
+                                <div class="indent-20px">
+                                    worldgen
+                                    <div class="indent-20px">
+                                        biome
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="indent-20px">
+                                minecraft
+                                <div class="indent-20px" id="minecraft-tags">
+                                    tags
+                                    <div class="indent-20px" id="minecraft-tags-function">
+                                        function
+                                        <div class="indent-20px">tick.json</div>
+                                        <div class="indent-20px">load.json</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="indent-20px">pack.mcmeta</div>
+                    </div>
+                </div> -->
+            </div>
         </div>
-        <div class="form-group">
-            <label for="namespace-input">名前空間</label>
-            <input class="form-control" id="namespace-input"></input>
-        </div>
-        <div class="form-group form-check">
-            <input type="checkbox" class="form-check-input" id="namespace-complement-input">
-            <label class="form-check-label" for="namespace-complement-input">データパック名から補完</label>
-        </div>
-        <div class="form-group">
-            <label for="mc-version-input">Minecraftのバージョン</label>
-            <select class="form-control" id="mc-version-input"></select>
-        </div>
-        <div class="form-group">
-            <label for="description-input">説明</label>
-            <textarea class="form-control" id="description-input" rows="3"></textarea>
-        </div>
-        <button type="button" class="btn btn-primary" id="generate-btn">生成（ダウンロード）</button>
     </div>
 
     <script src="./script.js"></script>

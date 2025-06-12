@@ -1,15 +1,8 @@
-/* textarea {
-    resize: none;
-    width: 400px;
-    height: 200px;
-} */
-/* https://qiita.com/Jackson123/items/4ce0622b8b54934d121f */
-
 body {
     padding: 10px;
 }
 
-#input-area {
-    width: 400px;
-    height: 200px;
+.indent-20px {
+    position: relative;
+    left: 20px;
 }
