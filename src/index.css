@@ -1,0 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --color-dark-bg: var(--color-slate-800);
+  --color-dark-text: var(--color-slate-100);
+  --color-dark-popover: var(--color-slate-900);
+  --font-mplus: "M PLUS Rounded 1c", sans-serif;
+}
