@@ -6,8 +6,8 @@ export default function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/licenses" element={<Licenses />} />
+        <Route path="/DatapackGenerator" element={<Main />} />
+        <Route path="/DatapackGenerator/licenses" element={<Licenses />} />
       </Routes>
     </Router>
   );
